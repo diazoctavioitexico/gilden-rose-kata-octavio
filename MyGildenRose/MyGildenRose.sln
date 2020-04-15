@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyGildenRose", "MyGildenRos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{9DB06041-FE38-45C0-955E-BD878C275BC4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary2", "ClassLibrary2\ClassLibrary2.csproj", "{590859EC-BFEB-451A-BF76-1A6610F50FA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9DB06041-FE38-45C0-955E-BD878C275BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DB06041-FE38-45C0-955E-BD878C275BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DB06041-FE38-45C0-955E-BD878C275BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{590859EC-BFEB-451A-BF76-1A6610F50FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590859EC-BFEB-451A-BF76-1A6610F50FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590859EC-BFEB-451A-BF76-1A6610F50FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590859EC-BFEB-451A-BF76-1A6610F50FA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
