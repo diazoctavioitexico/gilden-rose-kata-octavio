@@ -1,13 +1,13 @@
-﻿namespace UnitTests
-{
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
-    [TestClass]
+namespace UnitTests
+{
     public class UnitTest1
     {
-        [TestMethod]
-        public void TestMethod1()
+        [Fact]
+        public void Test1()
         {
+
         }
     }
 }

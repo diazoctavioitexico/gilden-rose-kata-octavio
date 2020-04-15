@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyGildenRose
 {
-    class Program
+    public class Program
     {
         IList<Item> Items;
         static void Main(string[] args)
