@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\ItemNames.cs" />
     <Compile Include="Data\RepositoryItems.cs" />
     <Compile Include="Entitities\Item.cs" />
     <Compile Include="Program.cs" />
