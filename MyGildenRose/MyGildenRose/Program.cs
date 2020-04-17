@@ -1,5 +1,8 @@
 ﻿namespace MyGildenRose
 {
+    using System.Collections.Generic;
+    using ExtensionMethods;
+    using MyGildenRose.Constants;
     using MyGildenRose.Data;
 
     public class Program
@@ -16,74 +19,28 @@
 
         public static void UpdateQuality(Item item)
         {
-            if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
-            {
-                if (item.Quality > 0)
-                {
-                    if (item.Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        item.Quality = item.Quality - 1;
-                    }
-                }
-            }
-            else
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality = item.Quality + 1;
+            if (item.Quality < 0 || item.Quality > 50) return;
 
-                    if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.SellIn < 11)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
+            if (item.Name.Contains(ItemNames.Sulfura)) return;
 
-                        if (item.SellIn < 6)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-                    }
-                }
+            item.SellIn -= 1;
+
+            if (item.Name.Contains(ItemNames.AgedBrie)) item.Quality += 1;
+
+            if (item.Name.Contains(ItemNames.Backstage))
+            {
+                item.Quality = (item.SellIn > 5 && item.SellIn < 11) ? item.Quality += 2 :
+                               (item.SellIn <= 5) ? item.Quality += 3 : item.Quality += 1;
             }
 
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
+            if (item.Name.Contains(ItemNames.Conjured))
             {
-                item.SellIn = item.SellIn - 1;
+                item.Quality -= 2;
             }
 
-            if (item.SellIn < 0)
+            if (!item.Name.NotIn(new List<string>() { ItemNames.AgedBrie, ItemNames.Backstage, ItemNames.Conjured }))
             {
-                if (item.Name != "Aged Brie")
-                {
-                    if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.Quality > 0)
-                        {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                item.Quality = item.Quality - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        item.Quality = item.Quality - item.Quality;
-                    }
-                }
-                else
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
+                item.Quality = (item.SellIn < 1) ? item.Quality -= 2 : item.Quality -= 1;
             }
         }
     }

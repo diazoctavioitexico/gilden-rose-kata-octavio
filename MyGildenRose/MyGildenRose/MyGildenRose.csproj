@@ -46,6 +46,7 @@
     <Compile Include="Constants\ItemNames.cs" />
     <Compile Include="Data\RepositoryItems.cs" />
     <Compile Include="Entitities\Item.cs" />
+    <Compile Include="ExtensionMethods\StringExtensions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
