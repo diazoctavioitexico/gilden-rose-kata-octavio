@@ -4,7 +4,7 @@
 
     public static class StringExtensions
     {
-        public static bool NotIn(this string str, List<string> stringsToCompare)
+        public static bool NotIn(this string str, IList<string> stringsToCompare)
         {
             bool found = false;
 
