@@ -1,16 +1,16 @@
-using Xunit;
-using MyGildenRose;
-using System.Reflection;
-using System.Linq;
-
 namespace UnitTests
 {
+    using System.Linq;
+    using System.Reflection;
+    using MyGildenRose;
+    using Xunit;
+
     public class UnitTest1
     {
         [Fact]
         public void CheckItemClassMovedStillWorks()
         {
-            // note :  testing a movement of a file inside the same asembly does not really require a test unless you move item to another assembly
+            // note :  testing a movement of a file inside the same assembly does not really require a test unless you move item to another assembly
             var main = new Program();
             Assert.NotNull(main);
         }
@@ -23,7 +23,6 @@ namespace UnitTests
         public void CheckMovementOfFileItemDependency()
         {
             // assembly where you need to get sure of having that resource
-
             var resourceName = "Item";
             var assemblyName = "MyGildenRose";
 
@@ -47,7 +46,7 @@ namespace UnitTests
                 }
             }
 
-            Assert.True(dependencyItemFound == true);
+            Assert.True(dependencyItemFound);
 
         }
     }
