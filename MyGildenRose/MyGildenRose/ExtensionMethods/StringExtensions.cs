@@ -1,10 +1,9 @@
 ﻿namespace MyGildenRose.ExtensionMethods
 {
-    using System.Collections.Generic;
 
     public static class StringExtensions
     {
-        public static bool NotIn(this string str, IList<string> stringsToCompare)
+        public static bool In(this string str, params string[] stringsToCompare)
         {
             bool found = false;
 

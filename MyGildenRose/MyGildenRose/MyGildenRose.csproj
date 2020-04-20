@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants\ItemNames.cs" />
+    <Compile Include="Constants\ItemNamesConstants.cs" />
+    <Compile Include="Constants\QualityConstants.cs" />
+    <Compile Include="Constants\SellInConstants.cs" />
     <Compile Include="Data\RepositoryItems.cs" />
     <Compile Include="Entitities\Item.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />

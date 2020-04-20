@@ -4,6 +4,10 @@
     using MyGildenRose.Constants;
     using MyGildenRose.ExtensionMethods;
 
+
+    /// <summary>
+    /// Because of question of demo Ioc is not really necessary although it could be implemented
+    /// </summary>
     public static class RepositoryItems
     {
         public static IList<Item> GetItems()
@@ -23,28 +27,40 @@
 
         public static void UpdateQuality(Item item)
         {
-            if (item.Quality < 0 || item.Quality > 50) return;
+            if (item.Quality < Quality.LowerBound ||
+                item.Quality > Quality.UpperBound ||
+                item.Name.Contains(ItemNamesConstants.Sulfura))
+                return;
 
-            if (item.Name.Contains(ItemNames.Sulfura)) return;
+            item.SellIn += Quality.Decrease;
 
-            item.SellIn -= 1;
+            if (item.Name.Contains(ItemNamesConstants.AgedBrie))
+                item.Quality += Quality.Increase;
 
-            if (item.Name.Contains(ItemNames.AgedBrie)) item.Quality += 1;
-
-            if (item.Name.Contains(ItemNames.Backstage))
+            if (item.Name.Contains(ItemNamesConstants.Backstage))
             {
-                item.Quality = (item.SellIn > 5 && item.SellIn < 11) ? item.Quality += 2 :
-                               (item.SellIn <= 5) ? item.Quality += 3 : item.Quality += 1;
+                // note : if validations rules increase more than 2, move to if/else
+
+                item.Quality = (item.SellIn > SellIn.LowerBound && item.SellIn < SellIn.UpperBound)
+                                ? item.Quality += Quality.IncreaseTwiceAsFast :
+                                item.SellIn <= SellIn.LowerBound ?
+                                item.Quality += Quality.IncreaseThreeTimesAsFast : item.Quality += Quality.Increase;
+                return;
             }
 
-            if (item.Name.Contains(ItemNames.Conjured))
+            if (item.Name.Contains(ItemNamesConstants.Conjured))
             {
-                item.Quality -= 2;
+                item.Quality += Quality.DecreaseTwiceAsFast;
+                return;
             }
 
-            if (!item.Name.NotIn(new List<string>() { ItemNames.AgedBrie, ItemNames.Backstage, ItemNames.Conjured }))
+            if (!item.Name.In(ItemNamesConstants.AgedBrie,
+                ItemNamesConstants.Backstage,
+                ItemNamesConstants.Conjured))
             {
-                item.Quality = (item.SellIn < 1) ? item.Quality -= 2 : item.Quality -= 1;
+                item.Quality = (item.SellIn == SellIn.Expired) ?
+                    item.Quality += Quality.DecreaseTwiceAsFast :
+                    item.Quality += Quality.Decrease;
             }
         }
     }
