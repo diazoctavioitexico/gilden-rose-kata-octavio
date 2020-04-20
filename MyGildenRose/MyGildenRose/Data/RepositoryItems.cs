@@ -1,8 +1,8 @@
 ﻿namespace MyGildenRose.Data
 {
     using System.Collections.Generic;
-    using MyGildenRose.Constants;
-    using MyGildenRose.ExtensionMethods;
+    using Constants;
+    using ExtensionMethods;
 
 
     /// <summary>
@@ -25,35 +25,98 @@
             return itemsList;
         }
 
+        /// <summary>
+        /// Updates the quality of a product by validating some specific constraints.
+        /// </summary>
+        /// <param name="item">The item.</param>
         public static void UpdateQuality(Item item)
         {
-            if (item.Quality < Quality.LowerBound ||
-                item.Quality > Quality.UpperBound ||
-                item.Name.Contains(ItemNamesConstants.Sulfura))
-                return;
+            if (!IsValidCandidate(item)) return;
 
             item.SellIn += Quality.Decrease;
 
-            if (item.Name.Contains(ItemNamesConstants.AgedBrie))
-                item.Quality += Quality.Increase;
+            if (IsItemAgedBrie(item)) return;
 
-            if (item.Name.Contains(ItemNamesConstants.Backstage))
-            {
-                // note : if validations rules increase more than 2, move to if/else
+            if (IsBackstage(item)) return;
 
-                item.Quality = (item.SellIn > SellIn.LowerBound && item.SellIn < SellIn.UpperBound)
-                                ? item.Quality += Quality.IncreaseTwiceAsFast :
-                                item.SellIn <= SellIn.LowerBound ?
-                                item.Quality += Quality.IncreaseThreeTimesAsFast : item.Quality += Quality.Increase;
-                return;
-            }
+            if (IsConjured(item)) return;
 
-            if (item.Name.Contains(ItemNamesConstants.Conjured))
-            {
-                item.Quality += Quality.DecreaseTwiceAsFast;
-                return;
-            }
+            UpdateNormalProduct(item);
 
+        }
+
+        /// <summary>
+        /// Determines whether [is valid candidate] [the specified item].
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>
+        ///   <c>true</c> if [is valid candidate] [the specified item]; otherwise, <c>false</c>.
+        /// </returns>
+        private static bool IsValidCandidate(Item item)
+        {
+            return item.Quality >= Quality.LowerBound &&
+                   item.Quality <= Quality.UpperBound &&
+                   !item.Name.Contains(ItemNamesConstants.Sulfura);
+        }
+
+        /// <summary>
+        /// Determines whether [is item aged brie] [the specified item].
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>
+        ///   <c>true</c> if [is item aged brie] [the specified item]; otherwise, <c>false</c>.
+        /// </returns>
+        private static bool IsItemAgedBrie(Item item)
+        {
+            if (item.Name.Contains(ItemNamesConstants.AgedBrie)) return true;
+            item.Quality += Quality.Increase;
+            return false;
+
+        }
+
+        /// <summary>
+        /// Determines whether the specified item is backstage.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified item is backstage; otherwise, <c>false</c>.
+        /// </returns>
+        private static bool IsBackstage(Item item)
+        {
+            if (!item.Name.Contains(ItemNamesConstants.Backstage)) return false;
+
+            // note : if validations rules increase more than 2, move to if/else
+
+            item.Quality = (item.SellIn > SellIn.LowerBound && item.SellIn < SellIn.UpperBound)
+                ? item.Quality += Quality.IncreaseTwiceAsFast
+                : item.SellIn <= SellIn.LowerBound
+                    ? item.Quality += Quality.IncreaseThreeTimesAsFast
+                    : item.Quality += Quality.Increase;
+            return true;
+
+        }
+
+        /// <summary>
+        /// Determines whether the specified item is conjured.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified item is conjured; otherwise, <c>false</c>.
+        /// </returns>
+        private static bool IsConjured(Item item)
+        {
+            if (!item.Name.Contains(ItemNamesConstants.Conjured)) return false;
+
+            item.Quality += Quality.DecreaseTwiceAsFast;
+            return true;
+        }
+
+        /// <summary>
+        /// Updates the normal product.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        private static void UpdateNormalProduct(Item item)
+        {
             if (!item.Name.In(ItemNamesConstants.AgedBrie,
                 ItemNamesConstants.Backstage,
                 ItemNamesConstants.Conjured))
