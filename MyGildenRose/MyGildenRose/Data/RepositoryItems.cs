@@ -1,16 +1,23 @@
-﻿namespace MyGildenRose.Data
+﻿using System.Data;
+
+namespace MyGildenRose.Data
 {
     using System.Collections.Generic;
     using Constants;
     using ExtensionMethods;
 
+    public interface IRepositoryItems
+    {
+        IList<Item> GetItems();
+        void UpdateQuality(Item item);
+    }
 
     /// <summary>
     /// Because of question of demo Ioc is not really necessary although it could be implemented
     /// </summary>
-    public static class RepositoryItems
+    public class RepositoryItems : IRepositoryItems
     {
-        public static IList<Item> GetItems()
+        public IList<Item> GetItems()
         {
             var itemsList = new List<Item>()
             {
@@ -29,11 +36,11 @@
         /// Updates the quality of a product by validating some specific constraints.
         /// </summary>
         /// <param name="item">The item.</param>
-        public static void UpdateQuality(Item item)
+        public void UpdateQuality(Item item)
         {
             if (!IsValidCandidate(item)) return;
 
-            item.SellIn += Quality.Decrease;
+            item.SellIn -= SellIn.Decrease;
 
             if (IsItemAgedBrie(item)) return;
 
@@ -52,7 +59,7 @@
         /// <returns>
         ///   <c>true</c> if [is valid candidate] [the specified item]; otherwise, <c>false</c>.
         /// </returns>
-        private static bool IsValidCandidate(Item item)
+        private bool IsValidCandidate(Item item)
         {
             return item.Quality >= Quality.LowerBound &&
                    item.Quality <= Quality.UpperBound &&
@@ -66,7 +73,7 @@
         /// <returns>
         ///   <c>true</c> if [is item aged brie] [the specified item]; otherwise, <c>false</c>.
         /// </returns>
-        private static bool IsItemAgedBrie(Item item)
+        private bool IsItemAgedBrie(Item item)
         {
             if (item.Name.Contains(ItemNamesConstants.AgedBrie)) return true;
             item.Quality += Quality.Increase;
@@ -81,7 +88,7 @@
         /// <returns>
         ///   <c>true</c> if the specified item is backstage; otherwise, <c>false</c>.
         /// </returns>
-        private static bool IsBackstage(Item item)
+        private bool IsBackstage(Item item)
         {
             if (!item.Name.Contains(ItemNamesConstants.Backstage)) return false;
 
@@ -103,7 +110,7 @@
         /// <returns>
         ///   <c>true</c> if the specified item is conjured; otherwise, <c>false</c>.
         /// </returns>
-        private static bool IsConjured(Item item)
+        private bool IsConjured(Item item)
         {
             if (!item.Name.Contains(ItemNamesConstants.Conjured)) return false;
 
@@ -115,7 +122,7 @@
         /// Updates the normal product.
         /// </summary>
         /// <param name="item">The item.</param>
-        private static void UpdateNormalProduct(Item item)
+        private void UpdateNormalProduct(Item item)
         {
             if (!item.Name.In(ItemNamesConstants.AgedBrie,
                 ItemNamesConstants.Backstage,

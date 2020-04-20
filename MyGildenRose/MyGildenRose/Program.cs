@@ -1,16 +1,16 @@
 ﻿namespace MyGildenRose
 {
-    using MyGildenRose.Data;
+    using Data;
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            var items = RepositoryItems.GetItems();
+            IRepositoryItems repositoryItems = new RepositoryItems();
 
-            foreach (var item in items)
+            foreach (var item in repositoryItems.GetItems())
             {
-                RepositoryItems.UpdateQuality(item);
+                repositoryItems.UpdateQuality(item);
             }
         }
     }

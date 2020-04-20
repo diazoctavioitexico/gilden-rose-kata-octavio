@@ -13,5 +13,7 @@ namespace MyGildenRose.Constants
         public const int UpperBound = 11;
 
         public const int Expired = 0;
+
+        public const int Decrease = 1;
     }
 }
