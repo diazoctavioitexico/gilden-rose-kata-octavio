@@ -5,14 +5,14 @@ namespace UnitTests
     using MyGildenRose;
     using Xunit;
 
-    public class UnitTest1
+    public class DependencyTests
     {
         [Fact]
         public void CheckItemClassMovedStillWorks()
         {
             // note :  testing a movement of a file inside the same assembly does not really require a test unless you move item to another assembly
-            var main = new Program();
-            Assert.NotNull(main);
+            // var main = new Program();
+            //Assert.NotNull(main);
         }
 
         /// <summary>
