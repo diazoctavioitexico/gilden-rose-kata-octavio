@@ -37,16 +37,16 @@
         /// <param name="item">The item.</param>
         public void UpdateQuality(Item item)
         {
-            if (!ItemValidator.IsCandidate(item)) return;
+            new ItemValidator().ValidateIsCandidate(item, validator =>
+            {
+                item.SellIn -= SellIn.Decrease;
 
-            item.SellIn -= SellIn.Decrease;
-
-            new ItemValidator()
-                .IsAgedBrieThen(item, this.UpdateQualityAgedBrie)
-                .IsBackstageThen(item, this.UpdateQualityBackStage)
-                .IsConjuredThen(item, this.UpdateQualityConjured)
-                .IsNotConstrainedProductThen(item, this.UpdateQualityNormalProduct);
-
+                validator.
+                ValidateAgedBrieThen(item, this.UpdateQualityAgedBrie).
+                ValidateBackstageThen(item, this.UpdateQualityBackStage).
+                ValidateConjuredThen(item, this.UpdateQualityConjured).
+                ValidateNotConstrainedThen(item, this.UpdateQualityNormalProduct);
+            });
         }
 
 

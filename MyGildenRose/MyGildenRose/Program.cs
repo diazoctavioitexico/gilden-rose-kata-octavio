@@ -1,4 +1,6 @@
-﻿namespace MyGildenRose
+﻿using System.Linq;
+
+namespace MyGildenRose
 {
     using Data;
 

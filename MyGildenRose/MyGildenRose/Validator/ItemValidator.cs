@@ -7,17 +7,20 @@ namespace MyGildenRose.Validator
     public class ItemValidator
     {
         /// <summary>
-        /// Determines whether the specified item is candidate.
+        /// Validates the candidate.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified item is candidate; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsCandidate(Item item)
+        /// <param name="validator">The validator.</param>
+        /// <returns></returns>
+        public void ValidateIsCandidate(Item item, Action<ItemValidator> validator)
         {
-            return item.Quality >= Quality.LowerBound &&
-                   item.Quality <= Quality.UpperBound &&
-                   !item.Name.Contains(ItemNamesConstants.Sulfura);
+            if (item.Quality >= Quality.LowerBound &&
+                item.Quality <= Quality.UpperBound &&
+                !item.Name.Contains(ItemNamesConstants.Sulfura))
+            {
+                validator?.Invoke(this);
+            }
+
         }
 
         /// <summary>
@@ -26,11 +29,11 @@ namespace MyGildenRose.Validator
         /// <param name="item">The item.</param>
         /// <param name="updateQuality">The update quality.</param>
         /// <returns></returns>
-        public ItemValidator IsAgedBrieThen(Item item, Action<Item> updateQuality)
+        public ItemValidator ValidateAgedBrieThen(Item item, Action<Item> updateQuality)
         {
             if (item.Name.Contains(ItemNamesConstants.AgedBrie))
             {
-                updateQuality.Invoke(item);
+                updateQuality?.Invoke(item);
             }
 
             return this;
@@ -42,11 +45,11 @@ namespace MyGildenRose.Validator
         /// <param name="item">The item.</param>
         /// <param name="updateQuality">The update quality.</param>
         /// <returns></returns>
-        public ItemValidator IsBackstageThen(Item item, Action<Item> updateQuality)
+        public ItemValidator ValidateBackstageThen(Item item, Action<Item> updateQuality)
         {
             if (item.Name.Contains(ItemNamesConstants.Backstage))
             {
-                updateQuality.Invoke(item);
+                updateQuality?.Invoke(item);
             }
 
             return this;
@@ -58,11 +61,11 @@ namespace MyGildenRose.Validator
         /// <param name="item">The item.</param>
         /// <param name="updateQuality">The update quality.</param>
         /// <returns></returns>
-        public ItemValidator IsConjuredThen(Item item, Action<Item> updateQuality)
+        public ItemValidator ValidateConjuredThen(Item item, Action<Item> updateQuality)
         {
             if (item.Name.Contains(ItemNamesConstants.Conjured))
             {
-                updateQuality.Invoke(item);
+                updateQuality?.Invoke(item);
             }
 
             return this;
@@ -74,13 +77,13 @@ namespace MyGildenRose.Validator
         /// <param name="item">The item.</param>
         /// <param name="updateQuality">The update quality.</param>
         /// <returns></returns>
-        public ItemValidator IsNotConstrainedProductThen(Item item, Action<Item> updateQuality)
+        public ItemValidator ValidateNotConstrainedThen(Item item, Action<Item> updateQuality)
         {
             if (!item.Name.In(ItemNamesConstants.AgedBrie,
                     ItemNamesConstants.Backstage,
                     ItemNamesConstants.Conjured))
             {
-                updateQuality.Invoke(item);
+                updateQuality?.Invoke(item);
             }
 
             return this;

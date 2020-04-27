@@ -17,7 +17,7 @@ namespace UnitTests
             var itemValidator = new ItemValidator();
             var item = new Item { Name = "Aged Brie", SellIn = 2, Quality = 0 };
 
-            itemValidator.IsAgedBrieThen(item, repositoryItems.UpdateQuality);
+            itemValidator.ValidateAgedBrieThen(item, repositoryItems.UpdateQuality);
 
             Assert.True(item.Quality == 1);
             Assert.True(item.SellIn == 1);
@@ -31,7 +31,7 @@ namespace UnitTests
             var itemValidator = new ItemValidator();
             var item = new Item { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 20 };
 
-            itemValidator.IsBackstageThen(item, repositoryItems.UpdateQuality);
+            itemValidator.ValidateBackstageThen(item, repositoryItems.UpdateQuality);
 
             Assert.True(item.Quality == 21);
             Assert.True(item.SellIn == 14);
@@ -44,10 +44,7 @@ namespace UnitTests
             var repositoryItems = new RepositoryItems();
             var item = new Item { Name = "Sulfuras passes to a TAFKAL80ETC concert", SellIn = 15, Quality = 20 };
 
-            if (ItemValidator.IsCandidate(item))
-            {
-                repositoryItems.UpdateQuality(item);
-            }
+            repositoryItems.UpdateQuality(item);
 
             Assert.True(item.Quality == 20);
             Assert.True(item.SellIn == 15);
@@ -61,7 +58,7 @@ namespace UnitTests
             var itemValidator = new ItemValidator();
             var item = new Item { Name = "Conjured Mana Cake", SellIn = 3, Quality = 6 };
 
-            itemValidator.IsConjuredThen(item, repositoryItems.UpdateQuality);
+            itemValidator.ValidateConjuredThen(item, repositoryItems.UpdateQuality);
 
             Assert.True(item.Quality == 5);
             Assert.True(item.SellIn == 2);
@@ -75,7 +72,7 @@ namespace UnitTests
             var itemValidator = new ItemValidator();
             var item = new Item { Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7 };
 
-            itemValidator.IsNotConstrainedProductThen(item, repositoryItems.UpdateQuality);
+            itemValidator.ValidateNotConstrainedThen(item, repositoryItems.UpdateQuality);
 
             Assert.True(item.Quality == 6);
             Assert.True(item.SellIn == 4);
